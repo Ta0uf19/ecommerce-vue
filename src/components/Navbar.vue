@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-lg bg-primary">
         <div class="container">
             <div class="navbar-translate">
-                <a class="navbar-brand" href="#pablo">Primary color</a>
+                <a class="navbar-brand">PriceQuery</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#example-navbar-primary" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-bar bar1"></span>
                     <span class="navbar-toggler-bar bar2"></span>
@@ -19,13 +19,20 @@
                         </router-link>
                     </li>
 
+
+                    <li :class="currentPage.includes('cart') ? 'nav-item active' : 'nav-item'" v-if="isLoggedIn">
+                        <router-link class="nav-link" to="/login">
+                            <i class="now-ui-icons shopping_cart-simple"></i>
+                            <p>Panier</p>
+                        </router-link>
+                    </li>
+
                     <li :class="currentPage.includes('login') ? 'nav-item active' : 'nav-item'" v-if="isLoggedIn">
                         <a class="nav-link" @click="logout">
                             <i class="now-ui-icons ui-1_settings-gear-63"></i>
                             <p>Logout</p>
                         </a>
                     </li>
-
                     <li :class="currentPage.includes('login') ? 'nav-item active' : 'nav-item'"  v-else>
                         <router-link class="nav-link" to="/login">
                             <i class="now-ui-icons users_single-02"></i>
@@ -49,9 +56,6 @@
               return this.$route.path;
             }
         },
-        mounted() {
-            console.log(this.$route.path);
-        },
         methods: {
             logout: function() {
                 this.$store.dispatch("logout").then(() => {
@@ -63,5 +67,7 @@
 </script>
 
 <style scoped>
-
+.navbar {
+    margin-bottom: 80px;
+}
 </style>

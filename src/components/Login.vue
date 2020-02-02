@@ -56,7 +56,7 @@
                 let password = this.password;
                 this.$store
                     .dispatch("login", { username, password })
-                    .then(() => this.$router.push("/"))
+                    .then(() => this.$router.push("/dashboard"))
                     .catch((err) => {
                         let response = err.response;
                         console.log(response.data.message);

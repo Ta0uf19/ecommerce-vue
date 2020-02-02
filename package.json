@@ -15,9 +15,11 @@
     "bootstrap": "^4.4.1",
     "bootstrap-vue": "^2.4.0",
     "core-js": "^3.4.4",
+    "font-awesome": "^4.7.0",
     "npm-watch": "^0.6.0",
     "vue": "^2.6.11",
     "vue-axios": "^2.1.5",
+    "vue-feather-icons": "^5.0.0",
     "vue-router": "^3.1.5",
     "vuex": "^3.1.2"
   },
@@ -28,6 +30,7 @@
     "babel-eslint": "^10.0.3",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "file-loader": "^5.0.2",
     "sass": "^1.25.0",
     "sass-loader": "^8.0.2",
     "vue-template-compiler": "^2.6.10"
