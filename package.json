@@ -11,6 +11,7 @@
   "dependencies": {
     "@websanova/vue-auth": "^2.21.15-beta",
     "axios": "^0.19.2",
+    "babel-loader": "^8.0.6",
     "bootstrap": "^4.4.1",
     "bootstrap-vue": "^2.4.0",
     "core-js": "^3.4.4",

@@ -8,7 +8,7 @@
     export default {
         name: "ProductSearch.vue",
         mounted() {
-            //this.axios.post('/client');
+
         }
     }
 </script>
