@@ -21,15 +21,9 @@
                        <p class="font-weight-bold">Format</p>
                        <b-row class="mt-2">
                            <b-col>
-                               <button type="button" class="btn btn-outline-primary btn-lg">Eau de parfum, 50ml</button>
-                           </b-col>
-                           <b-col>
-                               <button type="button" class="btn btn-outline-primary btn-lg">Eau de parfum, 100ml</button>
+                               <button type="button" class="btn btn-outline-primary btn-lg">Eau de parfum, {{ product.attributes_produit.volume }}</button>
                            </b-col>
                        </b-row>
-                       <div class="pull-right">
-                           <button type="button" class="btn btn-cart" >Ajouter au panier</button>
-                       </div>
                    </b-col>
                </b-row>
                <b-row class="mt-4">

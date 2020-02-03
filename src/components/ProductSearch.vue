@@ -26,7 +26,7 @@
                         <div class="card-title mb-4">Genre</div>
                         <div class="form-check">
                             <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" value="">
+                                <input class="form-check-input" type="checkbox" v-model="checkHomme">
                                 Homme
                                 <span class="form-check-sign">
                                   <span class="check"></span>
@@ -36,7 +36,7 @@
 
                         <div class="form-check">
                             <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox">
+                                <input class="form-check-input" type="checkbox" v-model="checkFemme">
                                 Femme
                                 <span class="form-check-sign">
                                     <span class="check"></span>
@@ -108,15 +108,18 @@
                 total: 0,
                 filter: {
                     brand: null,
-                    search: null,
+                    search: "",
                     gender: null,
                     type: null,
                 },
                 page: 0,
+                checkHomme: true,
+                checkFemme: true,
             }
         },
         methods: {
           async loadMore($state) {
+              this.filterGendre();
               let _obj = {...this.filter, ...{page: this.page}};
             await this.axios.post('/produit', _obj).then(({data}) => {
                 console.log(data);
@@ -142,17 +145,30 @@
               this.products = [];
               this.$refs.infiniteLoading.stateChanger.reset();
           },
+          filterGendre() {
+                if(this.checkHomme && this.checkFemme) {
+                    this.filter.gender = null;
+                } else {
+                    this.filter = (this.checkHomme) ? "homme" : "femme";
+                }
+          },
           search() {
             this.updateFilter();
           }
         },
         watch: {
-            filter: {
-                handler() {
-                    this.debouncedReset();
-                },
-                deep:true,
+            'filter.brand':function () {
+                this.debouncedReset();
             },
+            'filter.gender': function () {
+                this.debouncedReset();
+            },
+            checkHomme: function () {
+                this.debouncedReset();
+            },
+            checkFemme: function () {
+                this.debouncedReset();
+            }
         },
         created() {
             this.debouncedReset = _.debounce(this.reset, 600);

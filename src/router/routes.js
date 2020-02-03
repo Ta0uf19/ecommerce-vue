@@ -5,6 +5,8 @@ import VueRouter from "vue-router";
 import ProductSearch from "../components/ProductSearch";
 import Login from "../components/Login";
 import { store } from '../store/store'
+//import Cart from "../components/Cart";
+import ProductCart from "../components/ProductCart";
 
 const routes = [
     { path: '/', redirect: '/dashboard' },
@@ -28,7 +30,7 @@ const routes = [
     {
         path: '/cart',
         name: 'cart',
-        component: Login,
+        component: ProductCart,
         meta: {
             title: 'Panier | PriceQuery',
         }
