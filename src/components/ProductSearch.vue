@@ -49,7 +49,7 @@
             <b-col>
                 <div class="search input-holder mb-4">
                     <search-icon size="1.2x" class="mr-1"></search-icon>
-                    <input class="search form-control form-control-lg" type="text" placeholder="Chercher des parfums" v-model="filter.search">
+                    <input class="search form-control form-control-lg" type="text" placeholder="Chercher des parfums" v-model="filter.search" v-on:keyup.enter="search">
                 </div>
                 <b-row class="mb-2">
                     <div class="ml-4">
@@ -65,7 +65,7 @@
                             <b-card-text>
                                 <p style="font-weight: 500; font-size: 14px;">{{ product.libelle_produit }}</p>
                             </b-card-text>
-                            <p class="text-muted" style="font-weight: 400; font-size: 14px;">Eau de Parfum, Femme</p>
+                            <p class="text-muted" style="font-weight: 400; font-size: 14px;">Eau de Parfum, {{ (product.attributes_produit.genre.slice(0,1)).toUpperCase() }}{{ (product.attributes_produit.genre.substring(1)) }}  </p>
                             <p style="font-weight: 800; font-size: 17px;" class="pull-right">À partir de 55,00 €</p>
                             <div class="col text-center">
                                 <button type="button" class="btn btn-primary">Consulter le produit</button>
@@ -99,12 +99,6 @@
                     {name: "Channel", path: "cle.png"},
                     {name: "Channel", path: "yvez.PNG"},
                 ],
-                productMock: ["Yves-Saint-Laurent-Libre-EdP-50ml.jpg",
-                    "Valentino-Donna-EdP-100ml.jpg","Thierry-Mugler-Alien-EdP-60ml.jpg",
-                    "Giorgio-Armani-Acqua-Di-Gio-Profumo-EdP-125ml.jpg",
-                    "Thierry-Mugler-Alien-EdP-60ml.jpg",
-                    "Viktor-Rolf-Flowerbomb-EdP-100ml.jpg"],
-
                 products: [],
                 total: 0,
                 filter: {
@@ -112,19 +106,22 @@
                     search: null,
                     gender: null,
                     type: null,
-                    page: 0,
-                }
+                },
+                page: 0,
             }
         },
         methods: {
           async loadMore($state) {
-            await this.axios.post('/produit', this.filter).then(({data}) => {
+              let _obj = {...this.filter, ...{page: this.page}};
+              /*console.log("object ");
+              console.log(_obj);*/
+            await this.axios.post('/produit', _obj).then(({data}) => {
                 console.log(data);
                 let resp = data;
                 this.total = resp.total;
                 if(resp.data.length>0) {
                     this.products = [...this.products, ...resp.data];
-                    this.filter.page = this.filter.page + 1;
+                    this.page = this.page + 1;
 
                     $state.loaded();
                 }
@@ -138,18 +135,21 @@
             this.debouncedReset();
           },
           reset() {
-              this.filter.page = 0;
+              this.page = 0;
               this.products = [];
               this.$refs.infiniteLoading.stateChanger.reset();
+          },
+          search() {
+            this.updateFilter();
           }
         },
         watch: {
             filter: {
-                deep:true,
                 handler() {
-                    this.updateFilter();
-                }
-            }
+                    this.debouncedReset();
+                },
+                deep:true,
+            },
         },
         created() {
             this.debouncedReset = _.debounce(this.reset, 600);

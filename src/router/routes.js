@@ -7,6 +7,7 @@ import Login from "../components/Login";
 import { store } from '../store/store'
 
 const routes = [
+    { path: '/', redirect: '/dashboard' },
     {
         path: '/dashboard',
         name: 'home',
