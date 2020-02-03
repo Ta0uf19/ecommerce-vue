@@ -49,7 +49,7 @@
             <b-col>
                 <div class="search input-holder mb-4">
                     <search-icon size="1.2x" class="mr-1"></search-icon>
-                    <input class="search form-control form-control-lg" type="text" placeholder="Chercher des parfums">
+                    <input class="search form-control form-control-lg" type="text" placeholder="Chercher des parfums" v-model="filter.search">
                 </div>
                 <b-row class="mb-2">
                     <div class="ml-4">
@@ -57,13 +57,13 @@
                     </div>
                 </b-row>
                 <b-row class="justify-content-center">
-                    <b-col cols="auto" v-for="(product,index) in productMock" :key="index">
+                    <b-col cols="auto" v-for="(product,index) in products" :key="index">
                         <b-card
-                                :img-src="`./images/${product}`"
+                                :img-src="`${product.attributes_produit.image[0]}`"
                                 img-width="120px" img-top style="width: 248px;cursor: pointer;"
                         >
                             <b-card-text>
-                                <p style="font-weight: 500; font-size: 14px;">Yves Saint Laurent Black Opium</p>
+                                <p style="font-weight: 500; font-size: 14px;">{{ product.libelle_produit }}</p>
                             </b-card-text>
                             <p class="text-muted" style="font-weight: 400; font-size: 14px;">Eau de Parfum, Femme</p>
                             <p style="font-weight: 800; font-size: 17px;" class="pull-right">À partir de 55,00 €</p>
@@ -73,18 +73,21 @@
                         </b-card>
                     </b-col>
                 </b-row>
+                <infinite-loading ref="infiniteLoading" @infinite="loadMore" spinner="spiral"></infinite-loading>
             </b-col>
         </b-row>
     </div>
 </template>
 
 <script>
+    import _ from 'lodash';
     import {FilterIcon, SearchIcon} from 'vue-feather-icons'
+    import InfiniteLoading from 'vue-infinite-loading'
 
     export default {
         name: "ProductSearch.vue",
         components: {
-            FilterIcon, SearchIcon
+            FilterIcon, SearchIcon, InfiniteLoading
         },
         data() {
             return {
@@ -101,9 +104,55 @@
                     "Giorgio-Armani-Acqua-Di-Gio-Profumo-EdP-125ml.jpg",
                     "Thierry-Mugler-Alien-EdP-60ml.jpg",
                     "Viktor-Rolf-Flowerbomb-EdP-100ml.jpg"],
+
+                products: [],
+                total: 0,
+                filter: {
+                    brand: null,
+                    search: null,
+                    gender: null,
+                    type: null,
+                    page: 0,
+                }
             }
         },
-        mounted() {
+        methods: {
+          async loadMore($state) {
+            await this.axios.post('/produit', this.filter).then(({data}) => {
+                console.log(data);
+                let resp = data;
+                this.total = resp.total;
+                if(resp.data.length>0) {
+                    this.products = [...this.products, ...resp.data];
+                    this.filter.page = this.filter.page + 1;
+
+                    $state.loaded();
+                }
+                else {
+                    $state.complete();
+                }
+            });
+          },
+          updateFilter(newFilter) {
+            this.filter = {...this.filter, ...newFilter};
+            this.debouncedReset();
+          },
+          reset() {
+              this.filter.page = 0;
+              this.products = [];
+              this.$refs.infiniteLoading.stateChanger.reset();
+          }
+        },
+        watch: {
+            filter: {
+                deep:true,
+                handler() {
+                    this.updateFilter();
+                }
+            }
+        },
+        created() {
+            this.debouncedReset = _.debounce(this.reset, 600);
         }
     }
 </script>

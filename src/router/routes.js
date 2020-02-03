@@ -23,6 +23,14 @@ const routes = [
         meta: {
             title: 'Login | PriceQuery',
         }
+    },
+    {
+        path: '/cart',
+        name: 'cart',
+        component: Login,
+        meta: {
+            title: 'Panier | PriceQuery',
+        }
     }
 ];
 

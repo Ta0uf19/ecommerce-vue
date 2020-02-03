@@ -19,9 +19,8 @@
                         </router-link>
                     </li>
 
-
                     <li :class="currentPage.includes('cart') ? 'nav-item active' : 'nav-item'" v-if="isLoggedIn">
-                        <router-link class="nav-link" to="/login">
+                        <router-link class="nav-link" to="/cart">
                             <i class="now-ui-icons shopping_cart-simple"></i>
                             <p>Panier</p>
                         </router-link>

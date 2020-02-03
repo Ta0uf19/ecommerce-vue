@@ -3,7 +3,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <h4 class="card-title">Login</h4>
+                    <h4 class="card-title text-center">Login</h4>
                     <b-alert show variant="danger" v-if="authStatus === 'error'">{{ error }}</b-alert>
                     <div class="card-body">
                         <form @submit.prevent="login">
