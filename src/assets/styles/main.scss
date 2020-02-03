@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap');
 body {
   background: #F8F8F8;
   font-size: 14px;
+  font-family: 'Montserrat', sans-serif;
 }
 .navbar {
   font-size: 16px;
@@ -37,4 +39,44 @@ body {
   border: 1px solid #ced4da;
   border-radius: 0.1rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.btn-cart {
+  background: #007EFF;
+  box-shadow: 0px 8px 16px rgba(0, 126, 255, 0.16);
+  transition: background 0.5s;
+}
+.btn-cart:hover {
+  background: #0752e4;
+}
+.btn-cart:active {
+  background: #0752e4;
+}
+.bg-primary {
+  background: #fff !important;
+}
+.navbar a:not(.btn):not(.dropdown-item) {
+  color: #000;
+}
+.nav-item.active {
+  background-color: rgba(179, 179, 179, 0.2);
+}
+.badge-dark {
+  background-color: #343a40 !important;
+  font-size: 14px !important;
+}
+.product-title {
+  font-size:18px;font-weight: 600;
+  display: block;
+  margin-top: 51px;
+}
+.product-price {
+  font-size: 30px; font-weight: 600; margin-top: 8px;
+}
+.v--modal-overlay {
+  background: hsla(0,0%,100%,.6) !important;
+}
+.btn-outline-primary {
+  color: #007eff;
+  border-color: #757575;
+  border: 2px solid!important;
 }

@@ -53,22 +53,26 @@
                 </div>
                 <b-row class="mb-2">
                     <div class="ml-4">
-                        <label class="text-muted">5 Results</label>
+                        <label class="text-muted">Environ {{ total }}  parfums trouvés</label>
                     </div>
                 </b-row>
+                <!-- product modal -->
+                <product-modal></product-modal>
+                <!--- products list -->
                 <b-row class="justify-content-center">
                     <b-col cols="auto" v-for="(product,index) in products" :key="index">
                         <b-card
                                 :img-src="`${product.attributes_produit.image[0]}`"
                                 img-width="120px" img-top style="width: 248px;cursor: pointer;"
                         >
+                            <b-badge href="#" variant="dark" class="pull-right">-{{ Math.floor(product.discount_produit) }} % </b-badge>
                             <b-card-text>
                                 <p style="font-weight: 500; font-size: 14px;">{{ product.libelle_produit }}</p>
                             </b-card-text>
                             <p class="text-muted" style="font-weight: 400; font-size: 14px;">Eau de Parfum, {{ (product.attributes_produit.genre.slice(0,1)).toUpperCase() }}{{ (product.attributes_produit.genre.substring(1)) }}  </p>
-                            <p style="font-weight: 800; font-size: 17px;" class="pull-right">À partir de 55,00 €</p>
+                            <p style="font-weight: 800; font-size: 17px;" class="pull-right">À partir de {{ product.prixu_produit }} €</p>
                             <div class="col text-center">
-                                <button type="button" class="btn btn-primary">Consulter le produit</button>
+                                <button type="button" class="btn btn-cart"  @click="$modal.show('modal-product', {id: product.num_produit})">Consulter le produit</button>
                             </div>
                         </b-card>
                     </b-col>
@@ -83,11 +87,12 @@
     import _ from 'lodash';
     import {FilterIcon, SearchIcon} from 'vue-feather-icons'
     import InfiniteLoading from 'vue-infinite-loading'
+    import ProductModal from "./ProductModal";
 
     export default {
         name: "ProductSearch.vue",
         components: {
-            FilterIcon, SearchIcon, InfiniteLoading
+            FilterIcon, SearchIcon, InfiniteLoading, ProductModal
         },
         data() {
             return {
@@ -113,8 +118,6 @@
         methods: {
           async loadMore($state) {
               let _obj = {...this.filter, ...{page: this.page}};
-              /*console.log("object ");
-              console.log(_obj);*/
             await this.axios.post('/produit', _obj).then(({data}) => {
                 console.log(data);
                 let resp = data;

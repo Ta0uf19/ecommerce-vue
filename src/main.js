@@ -1,6 +1,12 @@
 import Vue from 'vue'
 import App from './App.vue'
 
+import VuePageTransition from 'vue-page-transition'
+Vue.use(VuePageTransition);
+
+import VModal from 'vue-js-modal'
+Vue.use(VModal);
+
 // import bootstrap
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import './assets/styles/custom.scss'
