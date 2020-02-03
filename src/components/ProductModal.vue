@@ -39,6 +39,7 @@
                            <thead>
                            <tr>
                                <th scope="col">Marchand</th>
+                               <th scope="col">URL</th>
                                <th scope="col">Marque</th>
                                <th scope="col">Nom du produit</th>
                                <th scope="col">Prix</th>
@@ -46,31 +47,14 @@
                            </tr>
                            </thead>
                            <tbody>
-                           <tr>
-                               <th scope="row">
-                                   <img src="/images/641.png"/>
-                               </th>
-                               <td>Mark</td>
-                               <td>Otto</td>
-                               <td>@mdo</td>
-                               <td> <button type="button" class="btn btn-cart" >Ajouter au panier</button></td>
-                           </tr>
-                           <tr>
-                               <th scope="row">
-                                   <img src="/images/695.png"/>
-                               </th>
-                               <td>Jacob</td>
-                               <td>Thornton</td>
-                               <td>@fat</td>
-                               <td> <button type="button" class="btn btn-cart" >Ajouter au panier</button></td>
-                           </tr>
-                           <tr>
-                               <th scope="row">
-                                   <img src="/images/641.png"/>
-                               </th>
-                               <td>Larry</td>
-                               <td>the Bird</td>
-                               <td>@twitter</td>
+                           <tr v-for="pr in similarProducts" :key="pr.num_produit" >
+                               <td><strong>{{pr.id_fournisseur[0].nom_fournisseur}}</strong></td>
+                               <td class="btn-link">{{pr.url_produit}}</td>
+                               <td>{{pr.marque}}</td>
+                               <td>
+                                   <button type="button" class="btn-link" ">{{pr.libelle_produit}}</button>
+                               </td>
+                               <td><strong>{{pr.prixu_produit}}</strong></td>
                                <td> <button type="button" class="btn btn-cart" >Ajouter au panier</button></td>
                            </tr>
                            </tbody>
@@ -95,6 +79,7 @@
                 currentId: null,
                 product: {},
                 images: [],
+                similarProducts : {}, //<-----
             }
         },
         methods: {
@@ -103,7 +88,8 @@
                 // receive product id from productsearch.vue
                 //console.log(event.params.id);
                 Promise.all([
-                    this.fetchProduct(event.params.id)
+                    this.fetchProduct(event.params.id),
+                    this.fetchSimilarProducts(event.params.id)
                 ]).then(() => {
                     //let productResponse = resp[0];
                     // stage Image to correct format
@@ -115,6 +101,16 @@
                 let returnPromise;
                 await this.axios.get('/produit/'+id).then(({data}) => {
                     this.product = data;
+                    returnPromise = data;
+                    this.loading = false;
+                });
+                return returnPromise
+            },
+            async fetchSimilarProducts(id) {
+                this.loading = true;
+                let returnPromise;
+                await this.axios.get('/produit/similar/'+id).then(({data}) => {
+                    this.similarProducts = data;
                     returnPromise = data;
                     this.loading = false;
                 });
@@ -133,6 +129,8 @@
             reset() {
                 this.product = {};
                 this.images = [];
+                this.similarProducts = {};
+
             }
         }
     }
