@@ -3,7 +3,7 @@
         <div  class="container-fluid" style="width: 80%">
             <div class="navbar-translate">
                 <a class="navbar-brand">
-                    <img src="/images/logo.png" width="120px">
+                    <img src="/images/logo.png" width="120px" to="/dashboard">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#example-navbar-primary" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-bar bar1"></span>
@@ -33,8 +33,8 @@
                                 <img :src="product.image" alt="item1" width="100px" />
                                 <span class="item-name">{{product.name}}</span><br/>
                                 <div class="small pull-right">
-                                    <archive-icon size="1.5x" class="custom-class" @click="removeProduct(product)"></archive-icon>
-                                    Quantité : <input class="form-control form-control-sm" type="text" :value="product.qty" style="width: 45px; display: inline-block;">
+                                    <archive-icon size="1.5x" @click="removeProduct(product)"></archive-icon>
+                                    <minus-circle-icon size="1x"></minus-circle-icon>{{ product.qty }}<plus-circle-icon size="1x"></plus-circle-icon>
                                     |
                                     <span class="item-price">{{product.price}} €</span>
                                 </div>
@@ -74,11 +74,12 @@
 
 <script>
     import { mapGetters, mapState, mapActions } from 'vuex'
-    import { ArchiveIcon } from 'vue-feather-icons'
+    import { ArchiveIcon, PlusCircleIcon, MinusCircleIcon } from 'vue-feather-icons'
+
     export default {
         name: "Navbar",
         components: {
-            ArchiveIcon
+            ArchiveIcon, PlusCircleIcon, MinusCircleIcon
         },
         computed: {
             isLoggedIn: function() {

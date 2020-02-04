@@ -70,6 +70,7 @@ const mutations = {
         const cartItem = state.items.find(item => item.id === id);
         cartItem.quantity++
     },
+    //incrementItemQuantity
 
     setCartItems (state, { items }) {
         state.items = items

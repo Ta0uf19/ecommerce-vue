@@ -130,6 +130,9 @@
         components: {
             SearchIcon, UserPlusIcon
         },
+        /*created() {
+          console.log(this.$store.state.auth.user.username);
+        },*/
         methods: {
             ...mapGetters('cart', {
                 products: 'getItems',

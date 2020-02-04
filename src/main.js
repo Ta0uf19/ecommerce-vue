@@ -7,6 +7,9 @@ Vue.use(VuePageTransition);
 import VModal from 'vue-js-modal'
 Vue.use(VModal);
 
+import VueJWT from 'vuejs-jwt'
+Vue.use(VueJWT);
+
 // import bootstrap
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import './assets/styles/custom.scss'
