@@ -4,10 +4,10 @@ Vue.use(Vuex);
 
 
 import auth from "./modules/auth";
-import auth from "./modules/auth";
+import cart from "./modules/cart";
 
 export const store = new Vuex.Store({
     modules: {
-        auth
+        auth, cart
     }
 });
