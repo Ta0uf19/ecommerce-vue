@@ -86,7 +86,9 @@ body {
   margin-top: 51px;
 }
 .product-price {
-  font-size: 30px; font-weight: 600; margin-top: 8px;
+  font-size: 25px;
+  font-weight: 600;
+  margin-top: 8px;
 }
 .v--modal-overlay {
   background: hsla(0,0%,100%,.6) !important;
@@ -95,6 +97,9 @@ body {
   color: #007eff;
   border-color: #757575;
   border: 2px solid!important;
+}
+.btn-default {
+  background-color: #424242 !important;
 }
 
 /**
