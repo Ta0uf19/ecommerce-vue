@@ -176,4 +176,14 @@
     .v--modal-box.v--modal {
         padding: 20px !important;
     }
+
+    td, th {
+        vertical-align: middle;
+        font-size: medium;
+        text-align: center;
+    }
+    th {
+        margin: 2rem 0rem 1rem;
+        font-size: large;
+    }
 </style>
