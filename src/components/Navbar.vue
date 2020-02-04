@@ -26,33 +26,27 @@
                     <b-nav-item-dropdown v-if="isLoggedIn">
                         <template v-slot:button-content>
                             <i class="now-ui-icons shopping_cart-simple"></i>
-                            <p>Panier <span class='badge badge-info'>2</span></p>
+                            <p>Panier <span class='badge badge-info'>{{products.length}}</span></p>
                         </template>
-                        <b-dropdown-text>
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/cart-item2.jpg" alt="item1" />
-                            <span class="item-name">Angel</span><br/>
-                            <div class="small pull-right">
-                                Quantité : <input class="form-control form-control-sm" type="text" value="1" style="width: 50px; display: inline-block;">
-                                |
-                                <span class="item-price">355 €</span>
-                            </div>
-                        </b-dropdown-text>
-                        <b-dropdown-text>
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/cart-item2.jpg" alt="item1" />
-                            <span class="item-name">Kindle, 6" Glare-Free</span><br/>
-                            <div class="small pull-right">
-                                Quantité : <input class="form-control form-control-sm" type="text" value="1" style="width: 50px; display: inline-block;">
-                                |
-                                <span class="item-price">355 €</span>
-                            </div>
-                        </b-dropdown-text>
-                        <b-dropdown-divider></b-dropdown-divider>
+                        <div v-for="product in products" :key="product.id">
+                            <b-dropdown-text>
+                                <img :src="product.image" alt="item1" width="100px" />
+                                <span class="item-name">{{product.name}}</span><br/>
+                                <div class="small pull-right">
+                                    <archive-icon size="1.5x" class="custom-class" @click="removeProduct(product)"></archive-icon>
+                                    Quantité : <input class="form-control form-control-sm" type="text" :value="product.qty" style="width: 45px; display: inline-block;">
+                                    |
+                                    <span class="item-price">{{product.price}} €</span>
+                                </div>
+                            </b-dropdown-text>
+                            <b-dropdown-divider></b-dropdown-divider>
+                        </div>
                         <b-dropdown-text>
                             <div class="small pull-left">
                                 Sous total
                             </div>
                             <div class="pull-right font-weight-bolder">
-                                45 €
+                                {{ this.getTotalPrice() }} €
                             </div>
                         </b-dropdown-text>
                         <b-dropdown-divider></b-dropdown-divider>
@@ -79,17 +73,27 @@
 </template>
 
 <script>
+    import { mapGetters, mapState, mapActions } from 'vuex'
+    import { ArchiveIcon } from 'vue-feather-icons'
     export default {
         name: "Navbar",
+        components: {
+            ArchiveIcon
+        },
         computed: {
             isLoggedIn: function() {
                 return this.$store.getters.isLoggedIn;
             },
             currentPage: function () {
-              return this.$route.path;
-            }
+                return this.$route.path;
+            },
+            ...mapState({
+                products: state => state.cart.items
+            })
         },
         methods: {
+            ...mapGetters('cart', ['getTotalPrice']),
+            ...mapActions('cart', ['removeProduct']),
             logout: function() {
                 this.$store.dispatch("logout").then(() => {
                     this.$router.push("/login");

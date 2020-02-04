@@ -53,19 +53,6 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td v-if="product.id_fournisseur.length>0">{{product.id_fournisseur[0].nom_fournisseur}}</td>
-                                <td v-else> - </td>
-                                <td class="btn-link">{{product.url_produit}}</td>
-                                <td>{{product.marque}}</td>
-                                <td>
-                                    <button type="button" class="btn-link">{{product.libelle_produit}}</button>
-                                </td>
-                                <td><strong>{{product.prixu_produit}} €</strong></td>
-                                <td>
-                                    <button type="button" class="btn btn-cart">Ajouter au panier</button>
-                                </td>
-                            </tr>
                             <tr v-for="pr in similarProducts" :key="pr.num_produit">
                                 <td v-if="pr.id_fournisseur.length>0">{{pr.id_fournisseur[0].nom_fournisseur}}</td>
                                 <td v-else> - </td>
@@ -76,7 +63,7 @@
                                 </td>
                                 <td><strong>{{pr.prixu_produit}} €</strong></td>
                                 <td>
-                                    <button type="button" class="btn btn-cart">Ajouter au panier</button>
+                                    <button type="button" class="btn btn-cart" @click="addToCart(pr)">Ajouter au panier</button>
                                 </td>
                             </tr>
                             </tbody>
@@ -91,6 +78,8 @@
 <script>
     import Lingallery from 'lingallery';
     import { ActivityIcon } from 'vue-feather-icons'
+    import { mapActions } from 'vuex'
+
     export default {
         name: "ProductModal",
         components: {
@@ -102,14 +91,14 @@
                 currentId: null,
                 product: {},
                 images: [],
-                similarProducts: {}, //<-----
+                similarProducts: [], //<-----
             }
         },
         methods: {
+            // rajouter la méthode addProductToCart depuis le state cart.
+            ...mapActions('cart', ['addProductToCart']),
             beforeOpen(event) {
                 this.reset();
-                // receive product id from productsearch.vue
-                //console.log(event.params.id);
                 Promise.all([
                     this.fetchProduct(event.params.id),
                     this.fetchSimilarProducts(event.params.id)
@@ -117,6 +106,9 @@
                     //let productResponse = resp[0];
                     // stage Image to correct format
                     this.parseImage();
+
+                    // insérer notre produit dans le comparateur
+                    this.similarProducts.unshift(this.product);
                 });
             },
             async fetchProduct(id) {
@@ -154,6 +146,10 @@
                 this.images = [];
                 this.similarProducts = {};
 
+            },
+            addToCart(product) {
+                this.$noty.success("Le produit est ajouté à votre panier.", {layout: 'topRight'});
+                this.addProductToCart(product);
             }
         }
     }

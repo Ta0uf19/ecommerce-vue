@@ -28,6 +28,14 @@ import router from './router/routes';
 import { store } from './store/store'
 Vue.config.productionTip = false;
 
+// notification
+import Notifications from 'vue-notification'
+Vue.use(Notifications);
+
+// vuenoty
+import VueNoty from 'vuejs-noty'
+Vue.use(VueNoty, {theme: 'sunset'});
+
 new Vue({
   el: '#app',
   router,

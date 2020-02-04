@@ -122,10 +122,19 @@
 <script>
     import { SearchIcon } from 'vue-feather-icons'
     import { UserPlusIcon } from 'vue-feather-icons'
+    import { mapGetters } from 'vuex';
+
+
     export default {
         name: "ProductCart",
         components: {
             SearchIcon, UserPlusIcon
+        },
+        methods: {
+            ...mapGetters('cart', {
+                products: 'getItems',
+                total: 'getTotalPrice'
+            })
         }
     }
 </script>
