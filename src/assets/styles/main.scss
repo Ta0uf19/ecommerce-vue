@@ -114,6 +114,7 @@ $light-text: #ABB0BE;
 .item-name {
   padding-top: 10px;
   font-size: 16px;
+  //white-space: nowrap; overflow: hidden;text-overflow:ellipsis;
 }
 .item-price {
   color: $main-color;
@@ -122,4 +123,23 @@ $light-text: #ABB0BE;
 
 .item-quantity {
   color: $light-text;
+}
+
+.multiselect__option {
+  font-size: 13px !important;
+}
+.multiselect__tags {
+  font-size: 13px  !important;
+}
+.multiselect__element {
+  font-size: 13px !important;
+}
+.multiselect__single {
+  font-size: 13px !important;
+}
+.multiselect__input, .multiselect__single {
+  font-size: 13px !important;
+}
+.btn-primary.disabled {
+  background: #808080;
 }

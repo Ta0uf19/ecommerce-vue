@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container-fluid" style="width: 80%">
         <b-row>
             <b-col>
                 <b-card>
@@ -8,8 +8,10 @@
                         <b-col>
                             <b-button v-b-toggle.collapse-1 class="btn btn-outline-default" style="width: 100%;"><user-plus-icon size="1.5x" class="custom-class"></user-plus-icon> Ajouter un nouveau client</b-button>
                         </b-col>
-                        <b-col>
-                            <b-button v-b-toggle.collapse-1 class="btn btn-outline-default pull-right" style="width: 100%;"><search-icon size="1.5x" class="custom-class"></search-icon> Chercher un client</b-button>
+                        <b-col class="mt-2">
+                            <multiselect v-model="selectedUser" id="ajax" :custom-label="nomPrenom" track-by="id_client" placeholder="Chercher un client" open-direction="bottom" :options="users" :multiple="false" :searchable="true" :loading="isLoading" :internal-search="false" :clear-on-select="false" :close-on-select="true" :options-limit="300" :limit="3" :limit-text="limitText" :max-height="600" :show-no-results="false" :hide-selected="true" @search-change="asyncFind">
+                                <template slot="tag" slot-scope="{ option, remove }"><span class="custom__tag"><span>{{ option.nom_client }} {{ option.prenom_client }}</span><span class="custom__remove" @click="remove(option)">❌</span></span></template>
+                            </multiselect>
                         </b-col>
                     </b-row>
                     <b-collapse id="collapse-1" class="mt-2">
@@ -57,14 +59,24 @@
                     <h5 class="mb-5 mt-2 font-weight-bold">Informations relatives au client</h5>
                     <div class="form-group">
                         <label>Nom et prénom</label>
-                        <input type="password" class="form-control" i placeholder="Nom & prénom">
+                        <span class="font-weight-bold d-block" v-if="selectedUser != null">{{selectedUser.nom_client +' ' + selectedUser.prenom_client}}</span>
                     </div>
                     <div class="form-group">
                         <label>Adresse de livrasion</label>
-                        <input type="password" class="form-control" i placeholder="Nom">
+                        <span class="font-weight-bold d-block" v-if="selectedUser != null">{{selectedUser.adresse_client}}</span>
+                        <span class="font-weight-bold d-block" v-if="selectedUser != null">{{selectedUser.zip_code_client}}</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Téléphone</label>
+                        <span class="font-weight-bold d-block" v-if="selectedUser != null">{{selectedUser.telephone_client}}</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Adresse electronique</label>
+                        <span class="font-weight-bold d-block" v-if="selectedUser != null">{{selectedUser.email_client}}</span>
                     </div>
                     <div>
-                        <b-btn href="#" class="btn btn-primary mb-3" style="width: 100%;" to="/cart">
+                        <b-btn href="#" class="btn btn-primary mb-3" style="width: 100%;" to="/cart" :disabled="selectedUser === null || totalItems() === 0" @click="order()">
+                            <b-spinner small v-if="loading === true"></b-spinner>
                             Passer la commande
                         </b-btn>
                     </div>
@@ -73,46 +85,8 @@
             <b-col cols="4">
                 <b-card>
                     <h5 class="mb-5 mt-2 font-weight-bold">Résumé de la commande</h5>
-                    <b-card-text>
-                        <b-row>
-                            <b-col cols="4">
-                                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/cart-item2.jpg" alt="item1"/>
-                            </b-col>
-                            <b-col>
-                                <span class="item-name">Angel</span><br/>
-                                <div class="small pull-right mt-4">
-                                    Quantité : <input class="form-control form-control-sm" type="text" value="1"
-                                                      style="width: 40px; display: inline-block;">
-                                    |
-                                    <span class="item-price">355 €</span>
-                                </div>
-                            </b-col>
-                        </b-row>
-                        <hr>
-                        <b-row>
-                            <b-col cols="4">
-                                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/cart-item2.jpg" alt="item1"/>
-                            </b-col>
-                            <b-col>
-                                <span class="item-name">Angel</span><br/>
-                                <div class="small pull-right mt-4">
-                                    Quantité : <input class="form-control form-control-sm" type="text" value="1"
-                                                      style="width: 40px; display: inline-block;"> |
-                                    <span class="item-price">355 €</span>
-                                </div>
-                            </b-col>
-                        </b-row>
-                        <hr/>
-                        <b-row>
-                            <b-col>
-                                <div class="small pull-left">Sous total</div>
-                            </b-col>
-                            <b-col>
-                                <div class="pull-right font-weight-bolder">45 €</div>
-                            </b-col>
-                        </b-row>
-                        <hr/>
-                    </b-card-text>
+                    <!-- cart component -->
+                    <cart></cart>
                 </b-card>
             </b-col>
         </b-row>
@@ -120,25 +94,79 @@
 </template>
 
 <script>
-    import { SearchIcon } from 'vue-feather-icons'
+    import Cart from "./Cart";
     import { UserPlusIcon } from 'vue-feather-icons'
-    import { mapGetters } from 'vuex';
+    import { mapGetters, mapState} from 'vuex';
+    import Multiselect from 'vue-multiselect'
 
 
     export default {
         name: "ProductCart",
         components: {
-            SearchIcon, UserPlusIcon
+            Cart, UserPlusIcon, Multiselect
+        },
+        data() {
+            return {
+                selectedUser: null,
+                users: [],
+                isLoading: false,
+                loading: false,
+            }
+        },
+        computed: {
+            ...mapState({
+                products: state => state.cart.items
+            })
         },
         methods: {
             ...mapGetters('cart', {
-                products: 'getItems',
-                total: 'getTotalPrice'
-            })
-        }
+                total: 'getTotalPrice',
+                totalItems: 'getTotalItems'
+            }),
+            asyncFind (query) {
+                //console.log(query);
+                this.isLoading = true;
+                this.axios.post('/client', {search: query}).then(response => {
+                    this.users = response.data;
+                    this.isLoading = false
+                })
+            },
+            limitText (count) {
+                return `and ${count} other countries`
+            },
+            nomPrenom ({ nom_client, prenom_client }) {
+                return `${nom_client} ${prenom_client}`
+            },
+            // garbage code
+            async order() {
+                this.loading = true;
+                let obj = {
+                    id_client: this.selectedUser.id_client,
+                    products: []
+                };
+                console.log(this.products);
+                this.products.forEach(item => {
+                    obj.products.push({id_produit: item.id, qty: item.qty})
+
+                });
+                // add order
+                console.log(obj);
+
+                await this.axios.post('/order/add', obj).then(({data}) => {
+                    console.log(data);
+
+                    this.$swal(`Votre commande est confirmé # ${data.num_cmd}`, "You are ready to start!", "success");
+                    this.loading = false;
+                });
+            }
+        },
     }
 </script>
 
 <style scoped>
+li {
+    display: inline !important;
+}
+ul { list-style-type: none !important; }
 
 </style>

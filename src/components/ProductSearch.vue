@@ -17,9 +17,9 @@
                         <div>
                             <div class="card text-left" :class="(index % 2) === 0 ? 'pull-right' : ''" style="width: 45%;" v-for="(marque,index) in marqueFilter" v-bind:key="index">
                                 <div class="card-body">
-                                    <b-form-checkbox value="orange">
-                                            <img :src="`./images/${marque.path}`">
-                                    </b-form-checkbox>
+                                    <b-form-radio :value="marque.name" name="some-radios" v-model="filter.brand">
+                                        <img :src="`./images/${marque.path}`">
+                                    </b-form-radio>
                                 </div>
                             </div>
                         </div>
@@ -63,13 +63,13 @@
                     <b-col cols="auto" v-for="(product,index) in products" :key="index">
                         <b-card
                                 :img-src="`${product.attributes_produit.image[0]}`"
-                                img-width="120px" img-top style="width: 248px;cursor: pointer;"
+                                img-width="120px" img-top style="width: 248px; cursor: pointer;"
                         >
                             <b-badge href="#" variant="dark" class="pull-right">-{{ Math.floor(product.discount_produit) }} % </b-badge>
                             <b-card-text>
-                                <p style="font-weight: 500; font-size: 14px;">{{ product.libelle_produit }}</p>
+                                <p style="font-weight: 500; font-size: 14px; white-space: nowrap; overflow: hidden;text-overflow:ellipsis;">{{ product.libelle_produit }}</p>
                             </b-card-text>
-                            <p class="text-muted" style="font-weight: 400; font-size: 14px;">Eau de Parfum, {{ (product.attributes_produit.genre.slice(0,1)).toUpperCase() }}{{ (product.attributes_produit.genre.substring(1)) }}  </p>
+                            <p class="text-muted" style="font-weight: 400; font-size: 14px; ">Eau de Parfum, {{ (product.attributes_produit.genre.slice(0,1)).toUpperCase() }}{{ (product.attributes_produit.genre.substring(1)) }}  </p>
                             <p style="font-weight: 800; font-size: 17px;" class="pull-right">À partir de {{ product.prixu_produit }} €</p>
                             <div class="col text-center">
                                 <button type="button" class="btn btn-cart"  @click="$modal.show('modal-product', {id: product.num_produit})">Consulter le produit</button>
@@ -97,13 +97,14 @@
         data() {
             return {
                 marqueFilter: [
-                    {name: "Channel", path: "641.png"},
-                    {name: "Channel", path: "695.png"},
-                    {name: "Channel", path: "sephora.png"},
-                    {name: "Channel", path: "dior.png"},
-                    {name: "Channel", path: "cle.png"},
-                    {name: "Channel", path: "yvez.PNG"},
+                    {name: "CHANEL", path: "641.png"},
+                    {name: "BOSS", path: "695.png"},
+                    {name: "SEPHORA", path: "sephora.png"},
+                    {name: "DIOR", path: "dior.png"},
+                    {name: "CLE", path: "cle.png"},
+                    {name: "YVEZ", path: "yvez.PNG"},
                 ],
+                //checkedMarque: [],
                 products: [],
                 total: 0,
                 filter: {
@@ -119,7 +120,6 @@
         },
         methods: {
           async loadMore($state) {
-              this.filterGendre();
               let _obj = {...this.filter, ...{page: this.page}};
             await this.axios.post('/produit', _obj).then(({data}) => {
                 console.log(data);
@@ -143,13 +143,14 @@
           reset() {
               this.page = 0;
               this.products = [];
+              this.filterGendre();
               this.$refs.infiniteLoading.stateChanger.reset();
           },
           filterGendre() {
                 if(this.checkHomme && this.checkFemme) {
                     this.filter.gender = null;
                 } else {
-                    this.filter = (this.checkHomme) ? "homme" : "femme";
+                    this.filter.gender = (this.checkHomme) ? "homme" : "femme";
                 }
           },
           search() {
@@ -158,9 +159,6 @@
         },
         watch: {
             'filter.brand':function () {
-                this.debouncedReset();
-            },
-            'filter.gender': function () {
                 this.debouncedReset();
             },
             checkHomme: function () {

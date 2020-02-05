@@ -12,12 +12,15 @@ const getters = {
    //     return state.items.find(item => item.id === id);
    // },
     getTotalPrice: (state) => {
-        return state.items.reduce((total, item) => {
-            return total + item.price * item.qty
-        }, 0);
+        return Math.round(state.items.reduce((total, item) => {
+            return total + item.price * item.qty;
+        }, 0) * 100) / 100;
     },
     getItems() {
        return state.items;
+    },
+    getTotalItems() {
+        return state.items.length;
     }
 };
 
@@ -44,11 +47,18 @@ const actions = {
         if (!cartItem) {
             commit('pushProductToCart', product)
         } else {
-            commit('incrementItemQuantity', cartItem)
+            commit('increment', cartItem)
         }
     },
     removeProduct({ commit }, product) {
         commit('removeItem', product);
+    },
+
+    increment({ commit }, product) {
+        commit('increment', product)
+    },
+    decrement({ commit }, product) {
+        commit('decrement', product)
     }
 };
 
@@ -66,9 +76,15 @@ const mutations = {
         })
     },
 
-    incrementItemQuantity (state, { id }) {
+    increment (state, { id }) {
         const cartItem = state.items.find(item => item.id === id);
-        cartItem.quantity++
+        cartItem.qty++
+    },
+    decrement (state, { id }) {
+        const cartItem = state.items.find(item => item.id === id);
+        if(cartItem.qty>1) {
+            cartItem.qty--;
+        }
     },
 
     setCartItems (state, { items }) {

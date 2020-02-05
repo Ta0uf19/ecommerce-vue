@@ -19,9 +19,10 @@ const mutations = {
     auth_request(state) {
         state.status = 'loading';
     },
-    auth_success(state, token, user) {
+    auth_success(state, {token, user}) {
         state.status = 'success';
         state.token = token;
+        //console.log(user);
         state.user = user;
     },
     auth_error(state) {
@@ -39,9 +40,17 @@ const actions = {
         return new Promise((resolve, reject) => {
             AuthService.login(user).then(resp => {
                     const token = resp.data.token;
-                    const user = resp.data.user;
                     localStorage.setItem('token', token);
-                    commit('auth_success', token, user);
+
+                    //
+                    const base64Url = token.split('.')[1];
+                    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                    const buff = new Buffer(base64, 'base64');
+                    const payloadinit = buff.toString('ascii');
+                    const user = JSON.parse(payloadinit);
+                    //console.log(user);
+
+                    commit('auth_success', {token , user});
                     resolve(resp)
                 })
                 .catch(err => {
