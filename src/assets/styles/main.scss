@@ -124,3 +124,22 @@ $light-text: #ABB0BE;
 .item-quantity {
   color: $light-text;
 }
+
+.multiselect__option {
+  font-size: 13px !important;
+}
+.multiselect__tags {
+  font-size: 13px  !important;
+}
+.multiselect__element {
+  font-size: 13px !important;
+}
+.multiselect__single {
+  font-size: 13px !important;
+}
+.multiselect__input, .multiselect__single {
+  font-size: 13px !important;
+}
+.btn-primary.disabled {
+  background: #808080;
+}

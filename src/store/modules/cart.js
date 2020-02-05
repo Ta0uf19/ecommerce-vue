@@ -12,9 +12,9 @@ const getters = {
    //     return state.items.find(item => item.id === id);
    // },
     getTotalPrice: (state) => {
-        return state.items.reduce((total, item) => {
-            return total + item.price * item.qty
-        }, 0);
+        return Math.round(state.items.reduce((total, item) => {
+            return total + item.price * item.qty;
+        }, 0) * 100) / 100;
     },
     getItems() {
        return state.items;
@@ -82,7 +82,7 @@ const mutations = {
     },
     decrement (state, { id }) {
         const cartItem = state.items.find(item => item.id === id);
-        if(cartItem.quantity>0) {
+        if(cartItem.qty>1) {
             cartItem.qty--;
         }
     },

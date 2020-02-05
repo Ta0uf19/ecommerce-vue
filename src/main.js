@@ -16,6 +16,9 @@ import './assets/styles/custom.scss'
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 
+import VueSwal from 'vue-swal'
+Vue.use(VueSwal);
+
 // import axios configuration API
 
 import axios from "./services/Api";
