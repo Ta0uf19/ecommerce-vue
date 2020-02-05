@@ -36,6 +36,10 @@ Vue.use(Notifications);
 import VueNoty from 'vuejs-noty'
 Vue.use(VueNoty, {theme: 'sunset'});
 
+//vue-moment
+import moment from 'moment'
+Vue.prototype.moment = moment ;
+
 new Vue({
   el: '#app',
   router,
