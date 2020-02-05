@@ -73,46 +73,8 @@
             <b-col cols="4">
                 <b-card>
                     <h5 class="mb-5 mt-2 font-weight-bold">Résumé de la commande</h5>
-                    <b-card-text>
-                        <b-row>
-                            <b-col cols="4">
-                                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/cart-item2.jpg" alt="item1"/>
-                            </b-col>
-                            <b-col>
-                                <span class="item-name">Angel</span><br/>
-                                <div class="small pull-right mt-4">
-                                    Quantité : <input class="form-control form-control-sm" type="text" value="1"
-                                                      style="width: 40px; display: inline-block;">
-                                    |
-                                    <span class="item-price">355 €</span>
-                                </div>
-                            </b-col>
-                        </b-row>
-                        <hr>
-                        <b-row>
-                            <b-col cols="4">
-                                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/cart-item2.jpg" alt="item1"/>
-                            </b-col>
-                            <b-col>
-                                <span class="item-name">Angel</span><br/>
-                                <div class="small pull-right mt-4">
-                                    Quantité : <input class="form-control form-control-sm" type="text" value="1"
-                                                      style="width: 40px; display: inline-block;"> |
-                                    <span class="item-price">355 €</span>
-                                </div>
-                            </b-col>
-                        </b-row>
-                        <hr/>
-                        <b-row>
-                            <b-col>
-                                <div class="small pull-left">Sous total</div>
-                            </b-col>
-                            <b-col>
-                                <div class="pull-right font-weight-bolder">45 €</div>
-                            </b-col>
-                        </b-row>
-                        <hr/>
-                    </b-card-text>
+                    <!-- cart component -->
+                    <cart></cart>
                 </b-card>
             </b-col>
         </b-row>
@@ -120,6 +82,7 @@
 </template>
 
 <script>
+    import Cart from "./Cart";
     import { SearchIcon } from 'vue-feather-icons'
     import { UserPlusIcon } from 'vue-feather-icons'
     import { mapGetters } from 'vuex';
@@ -128,11 +91,9 @@
     export default {
         name: "ProductCart",
         components: {
+            Cart,
             SearchIcon, UserPlusIcon
         },
-        /*created() {
-          console.log(this.$store.state.auth.user.username);
-        },*/
         methods: {
             ...mapGetters('cart', {
                 products: 'getItems',
@@ -143,5 +104,8 @@
 </script>
 
 <style scoped>
-
+li {
+    display: inline !important;
+}
+ul { list-style-type: none !important; }
 </style>

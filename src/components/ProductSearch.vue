@@ -63,13 +63,13 @@
                     <b-col cols="auto" v-for="(product,index) in products" :key="index">
                         <b-card
                                 :img-src="`${product.attributes_produit.image[0]}`"
-                                img-width="120px" img-top style="width: 248px;cursor: pointer;"
+                                img-width="120px" img-top style="width: 248px; cursor: pointer;"
                         >
                             <b-badge href="#" variant="dark" class="pull-right">-{{ Math.floor(product.discount_produit) }} % </b-badge>
                             <b-card-text>
-                                <p style="font-weight: 500; font-size: 14px;">{{ product.libelle_produit }}</p>
+                                <p style="font-weight: 500; font-size: 14px; white-space: nowrap; overflow: hidden;text-overflow:ellipsis;">{{ product.libelle_produit }}</p>
                             </b-card-text>
-                            <p class="text-muted" style="font-weight: 400; font-size: 14px;">Eau de Parfum, {{ (product.attributes_produit.genre.slice(0,1)).toUpperCase() }}{{ (product.attributes_produit.genre.substring(1)) }}  </p>
+                            <p class="text-muted" style="font-weight: 400; font-size: 14px; ">Eau de Parfum, {{ (product.attributes_produit.genre.slice(0,1)).toUpperCase() }}{{ (product.attributes_produit.genre.substring(1)) }}  </p>
                             <p style="font-weight: 800; font-size: 17px;" class="pull-right">À partir de {{ product.prixu_produit }} €</p>
                             <div class="col text-center">
                                 <button type="button" class="btn btn-cart"  @click="$modal.show('modal-product', {id: product.num_produit})">Consulter le produit</button>

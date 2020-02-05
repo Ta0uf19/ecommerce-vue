@@ -18,6 +18,9 @@ const getters = {
     },
     getItems() {
        return state.items;
+    },
+    getTotalItems() {
+        return state.items.length;
     }
 };
 
@@ -44,11 +47,18 @@ const actions = {
         if (!cartItem) {
             commit('pushProductToCart', product)
         } else {
-            commit('incrementItemQuantity', cartItem)
+            commit('increment', cartItem)
         }
     },
     removeProduct({ commit }, product) {
         commit('removeItem', product);
+    },
+
+    increment({ commit }, product) {
+        commit('increment', product)
+    },
+    decrement({ commit }, product) {
+        commit('decrement', product)
     }
 };
 
@@ -66,11 +76,16 @@ const mutations = {
         })
     },
 
-    incrementItemQuantity (state, { id }) {
+    increment (state, { id }) {
         const cartItem = state.items.find(item => item.id === id);
-        cartItem.quantity++
+        cartItem.qty++
     },
-    //incrementItemQuantity
+    decrement (state, { id }) {
+        const cartItem = state.items.find(item => item.id === id);
+        if(cartItem.quantity>0) {
+            cartItem.qty--;
+        }
+    },
 
     setCartItems (state, { items }) {
         state.items = items
