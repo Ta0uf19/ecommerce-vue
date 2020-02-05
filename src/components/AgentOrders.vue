@@ -12,8 +12,6 @@
                     </label>
                 </div>
             </div>
-
-
         <b-row class="mb-2">
             <div class="ml-4">
                 <label class="text-muted">{{ total }} commandes passées</label>
