@@ -179,11 +179,11 @@
 
     td, th {
         vertical-align: middle;
-        font-size: medium;
+        font-size: 14px;
         text-align: center;
     }
     th {
         margin: 2rem 0rem 1rem;
-        font-size: large;
+        font-size: 14px;
     }
 </style>

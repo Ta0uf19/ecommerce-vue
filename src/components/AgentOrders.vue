@@ -1,5 +1,5 @@
 <template>
-    <div class="container" @before-open="beforeOpen" >
+    <div class="container-fluid" style="width: 80%" @before-open="beforeOpen" >
         <b-col>
             <div class="row filter">
                 <input class="search form-control form-control-lg col-9" type="text" placeholder="Chercher par client" >
