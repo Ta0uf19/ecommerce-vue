@@ -40,7 +40,7 @@
                         <td>{{order.montant_cmd}}</td>
                         <td><span class="badge badge-primary">en cours</span></td>
                         <td>
-                            <button type="button" class="btn btn-primary"  @click="$modal.show('order-modal',{}) ">Consulter la commande</button>
+                            <button type="button" class="btn btn-primary"  @click="$modal.show('order-modal',{order,client : order.id_client}) ">Consulter la commande</button>
                         </td>
                     </tr>
                     <OrderModal></OrderModal>
