@@ -16,10 +16,10 @@ const getters = {
             return total + item.price * item.qty;
         }, 0) * 100) / 100;
     },
-    getItems() {
+    getItems(state) {
        return state.items;
     },
-    getTotalItems() {
+    getTotalItems(state) {
         return state.items.length;
     }
 };
