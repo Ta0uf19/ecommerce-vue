@@ -20,37 +20,37 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label>Nom</label>
-                                            <input type="password" class="form-control" i placeholder="Nom">
+                                            <input  class="form-control" i placeholder="Nom">
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-group">
                                             <label>Prénom</label>
-                                            <input type="password" class="form-control" i placeholder="Prénom">
+                                            <input  class="form-control" i placeholder="Prénom">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Adresse</label>
-                                    <input type="password" class="form-control" i placeholder="Adresse">
+                                    <input class="form-control" i placeholder="Adresse">
                                 </div>
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
                                             <label>Pays</label>
-                                            <input type="password" class="form-control" i placeholder="Pays">
+                                            <input  class="form-control" i placeholder="Pays">
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-group">
                                             <label>Zip code</label>
-                                            <input type="password" class="form-control" i placeholder="ZipCode">
+                                            <input  class="form-control" i placeholder="ZipCode">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Telephone</label>
-                                    <input type="password" class="form-control" i placeholder="Téléphone">
+                                    <input  class="form-control" i placeholder="Téléphone">
                                 </div>
                                 <button type="submit" class="btn btn-default pull-right">Ajouter</button>
                         </b-card>
