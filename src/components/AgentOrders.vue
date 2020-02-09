@@ -103,7 +103,11 @@
                 console.log('auth :'+this.$store.state.auth);
                 console.log('state :'+this.$store.state);
 
-                await this.axios.get('/agent/41/orders').then(({data}) => {
+                await this.axios.get('/orders/agent',{
+                    params: {
+                        "email": this.$store.state.auth.user.username
+                    }
+                }).then(({data}) => {
                     this.total = data.total;
                     this.orders = data.order;
                     console.log(data);
