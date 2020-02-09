@@ -54,7 +54,7 @@
 <script>
 
     import OrderModal from "./OrderModal";
-
+    import { mapGetters } from 'vuex';
     export default {
 
 
@@ -74,6 +74,7 @@
             this.beforeOpen();
         },
         methods: {
+            ...mapGetters(['getUser']),
             show:function () {
                 this.$modal.show('hello-world');
                 console.log('test');
@@ -95,6 +96,13 @@
             async fetchOrders() {
                 this.loading = true;
                 let returnPromise;
+
+                console.log(this.getUser().username);
+                console.log('email :'+this.$store.state.auth.user.username);
+                console.log('user :'+this.$store.state.auth.user);
+                console.log('auth :'+this.$store.state.auth);
+                console.log('state :'+this.$store.state);
+
                 await this.axios.get('/agent/41/orders').then(({data}) => {
                     this.total = data.total;
                     this.orders = data.order;

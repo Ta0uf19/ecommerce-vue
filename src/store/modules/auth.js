@@ -12,6 +12,9 @@ const getters = {
     isLoggedIn: state => !!state.token,
     authStatus(state) {
         return state.status;
+    },
+    getUser(state) {
+        return state.user;
     }
 };
 
@@ -19,11 +22,11 @@ const mutations = {
     auth_request(state) {
         state.status = 'loading';
     },
-    auth_success(state, {token, user}) {
+    auth_success(state, obj) {
         state.status = 'success';
-        state.token = token;
+        state.token = obj.token;
         //console.log(user);
-        state.user = user;
+        state.user = obj.user;
     },
     auth_error(state) {
         state.status = 'error';
@@ -42,15 +45,16 @@ const actions = {
                     const token = resp.data.token;
                     localStorage.setItem('token', token);
 
-                    //
+                    // jwt decoding
                     const base64Url = token.split('.')[1];
                     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
                     const buff = new Buffer(base64, 'base64');
                     const payloadinit = buff.toString('ascii');
                     const user = JSON.parse(payloadinit);
-                    //console.log(user);
 
-                    commit('auth_success', {token , user});
+
+                    let obj = {token, user};
+                    commit('auth_success', obj);
                     resolve(resp)
                 })
                 .catch(err => {
