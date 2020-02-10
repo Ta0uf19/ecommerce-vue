@@ -15,13 +15,15 @@
                     <div class="card-body">
                         <div class="card-title mb-4">Marque</div>
                         <div>
+                            <b-form-checkbox-group id="checkbox-group-1"  v-model="filter.brand" name="brand-1">
                             <div class="card text-left" :class="(index % 2) === 0 ? 'pull-right' : ''" style="width: 45%;" v-for="(marque,index) in marqueFilter" v-bind:key="index">
                                 <div class="card-body">
-                                    <b-form-radio :value="marque.name" name="some-radios" v-model="filter.brand">
+                                    <b-form-checkbox :value="marque.name">
                                         <img :src="`./images/${marque.path}`">
-                                    </b-form-radio>
+                                    </b-form-checkbox>
                                 </div>
                             </div>
+                            </b-form-checkbox-group>
                         </div>
                         <div class="card-title mb-4">Genre</div>
                         <div class="form-check">
@@ -104,7 +106,6 @@
                     {name: "CLE", path: "cle.png"},
                     {name: "YVEZ", path: "yvez.PNG"},
                 ],
-                //checkedMarque: [],
                 products: [],
                 total: 0,
                 filter: {
