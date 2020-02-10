@@ -16,6 +16,16 @@ const getters = {
             return total + item.price * item.qty;
         }, 0) * 100) / 100;
     },
+    getTotalShipping: (state) => {
+        return Math.round(state.items.reduce((total, item) => {
+            return total + item.ship_cost * item.qty;
+        }, 0) * 100) / 100;
+    },
+    getTotalDiscount: (state) => {
+        return Math.round(state.items.reduce((total, item) => {
+            return total + (item.price * item.discount * item.qty)/100;
+        }, 0)* 100) / 100;
+    },
     getItems(state) {
        return state.items;
     },

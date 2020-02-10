@@ -29,10 +29,10 @@
             <b-dropdown-divider></b-dropdown-divider>
         </div>
         <b-dropdown-text>
-            <div class="small pull-left">
+            <div class="font-weight-bold small pull-left">
                 Sous total
             </div>
-            <div class="pull-right font-weight-bolder">
+            <div class="font-weight-bolder pull-right">
                 {{ this.getTotalPrice() }} €
             </div>
         </b-dropdown-text>
@@ -53,7 +53,7 @@
             })
         },
         methods: {
-            ...mapGetters('cart', ['getTotalPrice']),
+            ...mapGetters('cart', ['getTotalPrice', 'getTotalShipping']),
             ...mapActions('cart', ['removeProduct', 'increment', 'decrement']),
         }
     }

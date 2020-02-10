@@ -87,6 +87,30 @@
                     <h5 class="mb-5 mt-2 font-weight-bold">Résumé de la commande</h5>
                     <!-- cart component -->
                     <cart></cart>
+                    <b-dropdown-text>
+                        <div class="font-weight-bold small pull-left">
+                            Livraison
+                        </div>
+                        <div class="pull-right font-weight-bolder">
+                            {{ totalShipping() }} €
+                        </div>
+                    </b-dropdown-text>
+                    <b-dropdown-text>
+                        <div class="font-weight-bold small pull-left">
+                            Promotion
+                        </div>
+                        <div class="pull-right font-weight-bolder">
+                            - {{ totalDiscout() }} €
+                        </div>
+                    </b-dropdown-text>
+                    <b-dropdown-text>
+                        <div class="font-weight-bold pull-left">
+                            Total à payer
+                        </div>
+                        <div class="pull-right font-weight-bolder">
+                            {{ totalPriceAfter }} €
+                        </div>
+                    </b-dropdown-text>
                 </b-card>
             </b-col>
         </b-row>
@@ -116,12 +140,17 @@
         computed: {
             ...mapState({
                 products: state => state.cart.items
-            })
+            }),
+            totalPriceAfter() {
+                return Math.round((this.totalPriceBefore() + this.totalShipping() - this.totalDiscout()) * 100) / 100;
+            }
         },
         methods: {
             ...mapGetters('cart', {
-                total: 'getTotalPrice',
-                totalItems: 'getTotalItems'
+                totalPriceBefore: 'getTotalPrice',
+                totalItems: 'getTotalItems',
+                totalShipping: 'getTotalShipping',
+                totalDiscout: 'getTotalDiscount',
             }),
             asyncFind (query) {
                 //console.log(query);
