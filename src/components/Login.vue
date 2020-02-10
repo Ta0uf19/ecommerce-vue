@@ -3,28 +3,28 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <h4 class="card-title text-center">Login</h4>
+                    <h4 class="card-title text-center">Connexion</h4>
                     <b-alert show variant="danger" v-if="authStatus === 'error'">{{ error }}</b-alert>
                     <div class="card-body">
                         <form @submit.prevent="login">
                             <div class="form-group row">
-                                <label for="email_address" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
+                                <label for="email_address" class="col-md-4 col-form-label text-md-right">Adresse électronique</label>
                                 <div class="col-md-6">
-                                    <input v-model="username" type="text" id="email_address" class="form-control" name="email-address" required autofocus placeholder="Enter email">
+                                    <input v-model="username" type="text" id="email_address" class="form-control" name="email-address" required autofocus placeholder="Entrer votre adresse électronique">
                                     <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
+                                <label for="password" class="col-md-4 col-form-label text-md-right">Mot de passe</label>
                                 <div class="col-md-6">
-                                    <input v-model="password" type="password" id="password" class="form-control" name="password" required  placeholder="Password">
+                                    <input v-model="password" type="password" id="password" class="form-control" name="password" required  placeholder="Mot de passe">
                                 </div>
                             </div>
 
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
                                     <b-spinner small v-if="authStatus === 'loading'"></b-spinner>
-                                    Login
+                                    Connexion
                                 </button>
                             </div>
                         </form>

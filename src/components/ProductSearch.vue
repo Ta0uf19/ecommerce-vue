@@ -7,7 +7,7 @@
                         <li class="list-group-item">
                             <div class="d-inline menu-title">
                                 <filter-icon size="1.2x" class="mr-1"></filter-icon>
-                                Filters
+                                <span class="font-weight-bold">Filtrer</span>
                             </div>
                         </li>
 

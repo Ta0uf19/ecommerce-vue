@@ -1,8 +1,23 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap');
+@font-face{font-family:'Circular Pro';font-style:normal;font-weight:400;font-display:swap;src:local('Circular Pro Book'),local('CircularPro-Book'),url(https://images.kiwi.com/fonts/circular-pro/book.woff2) format('woff2')}@font-face{font-family:'Circular Pro';font-style:italic;font-weight:400;font-display:swap;src:local('Circular Pro Book Italic'),local('CircularPro-BookItalic'),url(https://images.kiwi.com/fonts/circular-pro/book-italic.woff2) format('woff2')}@font-face{font-family:'Circular Pro';font-style:normal;font-weight:500;font-display:swap;src:local('Circular Pro Medium'),local('CircularPro-Medium'),url(https://images.kiwi.com/fonts/circular-pro/medium.woff2) format('woff2')}@font-face{font-family:'Circular Pro';font-style:normal;font-weight:700;font-display:swap;src:local('Circular Pro Bold'),local('CircularPro-Bold'),url(https://images.kiwi.com/fonts/circular-pro/bold.woff2) format('woff2')}
+
 body {
-  background: #F8F8F8;
+  background: rgb(245, 247, 249);
   font-size: 14px;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Circular Pro', 'Montserrat', sans-serif;
+}
+.navbar {
+  box-shadow: rgba(37, 42, 49, 0.16) 0px 0px 2px 0px, rgba(37, 42, 49, 0.12) 0px 2px 4px 0px;
+}
+.card {
+  box-shadow: rgba(37, 42, 49, 0.16) 0px 0px 2px 0px, rgba(37, 42, 49, 0.12) 0px 1px 4px 0px;
+}
+.badge {
+  border-radius: 5px;
+  font-size: 12px;
+}
+input {
+  font-family: inherit !important;
 }
 .navbar {
   font-size: 16px;

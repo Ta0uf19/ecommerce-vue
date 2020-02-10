@@ -12,7 +12,7 @@ const fetch = () => {
     };
     const instance = axios.create(options);
 
-    // Set the AUTH token for any request
+    // Set the AUTH token for any requestr
     instance.interceptors.request.use(function (config) {
         const token = localStorage.getItem('token');
         config.headers.Authorization =  token ? `Bearer ${token}` : '';
