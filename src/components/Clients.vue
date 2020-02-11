@@ -1,18 +1,31 @@
 <template>
-    <div class="container-fluid" style="width: 80%" @before-open="beforeOpen" >
-        <client-modal></client-modal>
-        <b-col>
-            <div class="row filter top-buffer">
-                <input class="search form-control form-control-lg col-9" type="text" placeholder="Chercher par client" >
+    <div class="container-fluid" style="width: 70%" @before-open="beforeOpen">
+        <div v-if="loading">
+            <div class="text-center">
+                <b-spinner label="Loading..."></b-spinner>
             </div>
-            <div class="row card top-buffer">
-                <div class="col-12">
-                    <table class="table table-borderless">
+        </div>
+        <div v-else>
+            <div class="col">
+                <div class="row">
+                    <button type="button" class="btn btn-outline-success col-2 float-right"
+                @click="$modal.show('client-modal',{client: client , method : 'create'}) "><i
+                    class="fa fa-plus-square"></i> create
+                </button>
+            </div>
+                <div class="row filter top-buffer">
+                    <input class="search form-control form-control-lg col-9" type="text"
+                           placeholder="Rechercher un client">
+                </div>
+            </div>
+            <client-modal></client-modal>
+            <b-col>
+                <div class="row card top-buffer">
+                    <table class="table ">
                         <thead>
                         <tr>
                             <th scope="col">nom_client</th>
                             <th scope="col">prenom_client</th>
-                            <th scope="col">telephone_client</th>
                             <th scope="col">email_client</th>
                             <th scope="col">country_client</th>
                             <th scope="col">Actions</th>
@@ -20,24 +33,31 @@
                         </thead>
                         <tbody>
                         <tr v-for="(client,index) in clients" :key="index">
-                            <th scope="row">{{client.nom_client}}</th>
-                            <th scope="row">{{client.prenom_client}}</th>
-                            <td>{{client.telephone_client}}</td>
+                            <td scope="row">{{client.nom_client}}</td>
+                            <td scope="row">{{client.prenom_client}}</td>
                             <td>{{client.email_client}}</td>
                             <td>{{client.country_client}}</td>
-                            <td></td>
-                           <td>
-                                <button type="button" class="btn btn-primary"  @click="$modal.show('client-modal') ">R</button>
-                                <button type="button" class="btn btn-warning"  @click="$modal.show('client-modal') ">U</button>
-                                <button type="button" class="btn btn-danger"  @click="DeleteUser(client.id_client, index)">D</button>
+                            <td>
+                                <button type="button" class="btn btn-primary"
+                                        @click="$modal.show('client-modal',{client: client , method : 'get'}) "><i
+                                        class="fa fa-eye"></i></button>
+                                <button type="button" class="btn btn-warning"
+                                        @click="$modal.show('client-modal',{client: client , method : 'edit'}) "><i
+                                        class="fa fa-edit"></i></button>
+                                <button type="button" class="btn btn-danger"
+                                        @click="DeleteUser(client.id_client, index)"><i class="fa fa-trash"></i>
+                                </button>
                             </td>
                         </tr>
-                       </tbody>
+                        </tbody>
                     </table>
                 </div>
-            </div>
-        </b-col>
+
+            </b-col>
+        </div>
     </div>
+
+
 </template>
 
 <script>
@@ -48,16 +68,19 @@
         components: {
             ClientModal
         },
-        data(){
-            return{
-                clients:{},
+        data() {
+            return {
+                clients: {},
+                loading: true,
+                marqueFilter: {name: "CHANEL", path: "641.png"},
+
             }
         },
-        created :function() {
+        created: function () {
             this.beforeOpen();
         },
-        methods:{
-            beforeOpen(){
+        methods: {
+            beforeOpen() {
                 console.log('before Open called');
                 this.reset();
                 Promise.all([
@@ -70,7 +93,7 @@
                 let returnPromise;
 
                 await this.axios.get('/client').then(({data}) => {
-                    this.clients = data ;
+                    this.clients = data;
                     returnPromise = data;
                     this.loading = false;
                 });
@@ -80,11 +103,11 @@
             reset() {
                 this.clients = {};
             },
-            DeleteUser:function(id, index) {
+            DeleteUser: function (id, index) {
 
-                if(confirm("Do you really want to delete?")){
+                if (confirm("Do you really want to delete?")) {
 
-                    this.axios.delete('/client/'+id)
+                    this.axios.delete('/client/' + id)
                         .then(({resp}) => {
                             this.clients.splice(index, 1);
                             console.log('laalaa' + resp);
@@ -95,14 +118,57 @@
                         })
                 }
             },
+
+
         }
 
     }
 </script>
 
 <style scoped>
-.top-buffer{
-    margin-top: 20px;
 
-}
+    .top-buffer {
+        margin-top: 20px;
+
+    }
+
+    table {
+        border: 0px;
+        border-collapse: collapse;
+        table-layout: fixed;
+        width: 100%;
+    }
+
+    table caption {
+        margin: .5em 0 .75em;
+    }
+
+    table tr {
+        border: 0px;
+        padding: .35em;
+    }
+
+    table tr:nth-child(even) {
+        background: #f8f8f8;
+    }
+
+    table th,
+    table td {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    table th {
+        background: #999;
+        color: #fff;
+        font-size: .85em;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+    }
+
+    table td {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 </style>
