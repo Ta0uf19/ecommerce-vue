@@ -30,6 +30,19 @@
                     </li>
 
                     <!--                    <li :class="currentPage.includes('cart') ? 'nav-item active' : 'nav-item'" v-if="isLoggedIn">-->
+                    <b-nav-item-dropdown ref="dropdown" :class="currentPage.includes('admin/') ? 'nav-item active' : 'nav-item'" v-if="isLoggedIn">
+                        <template v-slot:button-content>
+                            <p><i class="fa fa-user"></i> Admin</p>
+                        </template>
+                        <b-dropdown-text>
+                            <router-link class="nav-link" to="/admin/client">
+                                <p>Clients</p>
+                            </router-link>
+                            <router-link class="nav-link" to="/admin/product">
+                                <p>Produits</p>
+                            </router-link>
+                        </b-dropdown-text>
+                    </b-nav-item-dropdown>
 
                     <b-nav-item-dropdown ref="dropdown" v-if="isLoggedIn">
                         <template v-slot:button-content>
