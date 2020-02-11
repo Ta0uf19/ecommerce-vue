@@ -4,45 +4,45 @@
             <div class="modal-content">
                 <!--Header-->
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="$modal.hide('order-modal')">
                         <span aria-hidden="true" class="white-text">×</span>
                     </button>
                 </div>
                 <!--Body-->
                 <div class="text-center">
                     <h2>
-                        <strong>commande N°: {{order.num_cmd}}</strong>
+                        <strong>Commande #{{order.num_cmd}}</strong>
                     </h2>
                     <h3>
-                        <strong>Le {{moment(order.date_cmd).format('DD-MM-YYYY')}} à {{moment(order.date_cmd).format('HH:mm')}}</strong>
+                        <strong>Le {{moment(order.date_cmd).lang("fr").format('LLLL')}}</strong>
                     </h3>
                 </div>
                 <div class="modal-body">
                     <hr>
                     <div class="text-center">
-                        <h3>
-                            <strong>Client</strong>
-                        </h3>
+                        <h4>
+                            <strong>Informations client</strong>
+                        </h4>
                         <table class="table table-borderless">
                             <tbody>
                                 <tr>
-                                    <th scope="col">nom</th>
+                                    <th scope="col">Nom</th>
                                     <td align="left">{{client.nom_client}}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="col">prenom</th>
+                                    <th scope="col">Prénom</th>
                                     <td align="left">{{client.prenom_client}}</td>
                                 </tr>
                                 <tr>
-                                    <th>nom</th>
+                                    <th>Téléphone</th>
                                     <td align="left">{{client.telephone_client}}</td>
                                 </tr>
                                 <tr>
-                                    <th>e-mail</th>
+                                    <th>E-mail</th>
                                     <td align="left">{{client.email_client}}</td>
                                 </tr>
                                 <tr>
-                                    <th>adresse</th>
+                                    <th>Adresse</th>
                                     <td align="left">{{client.adresse_client}},<br> {{client.country_client}} </td>
                                 </tr>
                                 <tr></tr>
@@ -52,16 +52,16 @@
 
                     <hr>
                     <div class="text-center">
-                        <h3>
-                            <strong>Produits</strong>
-                        </h3>
+                        <h4>
+                            <strong>Liste des produits commandés</strong>
+                        </h4>
                         <table>
                             <thead>
-                                <th>libelle</th>
+                                <th>Libellé</th>
                                 <th>URL</th>
-                                <th>prix unitaire</th>
-                                <th>quantité</th>
-                                <th>prix totale</th>
+                                <th>Prix unitaire</th>
+                                <th>Quantité</th>
+                                <th>Prix total</th>
                             </thead>
                             <tr v-for="(item,index) in order.items" :key="index">
                                 <td>{{item.produit.libelle_produit}}</td>
@@ -74,7 +74,7 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <th>Totale :</th>
+                                <th>Total :</th>
                                 <th>{{order.montant_cmd}}</th>
                             </tr>
                         </table>

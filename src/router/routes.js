@@ -42,7 +42,7 @@ const routes = [
         name: 'orders',
         component: AgentOrders,
         meta: {
-            title: 'orders | PriceQuery',
+            title: 'Commandes | PriceQuery',
         }
     },
     {

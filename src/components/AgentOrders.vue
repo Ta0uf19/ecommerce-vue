@@ -1,60 +1,47 @@
 <template>
     <div class="container-fluid" style="width: 80%" @before-open="beforeOpen">
         <b-col>
-            <div class="row filter">
-                <input class="search form-control form-control-lg col-9" type="text" placeholder="Chercher par client">
-                <div class="form-check offset-1">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="checkbox">
-                        Tous les mois
-                        <span class="form-check-sign"><span class="check"></span>
-                </span>
-                    </label>
-                </div>
-            </div>
-            <b-row class="mb-2">
-                <div class="ml-4">
-                    <label class="text-muted">{{ total }} commandes passées</label>
-                </div>
-            </b-row>
             <div v-if="loading">
                 <div class="text-center">
                     <b-spinner label="Loading..."></b-spinner>
                 </div>
             </div>
             <div v-else>
+                <h3 class="mb-4 font-weight-bold">Liste des commandes</h3>
                 <div class="row card">
-                    <div class="col-12">
-                        <table class="table table-borderless">
-                            <thead>
-                            <tr>
-                                <th scope="col">N°</th>
-                                <th scope="col">date</th>
-                                <th scope="col">nom</th>
-                                <th scope="col">prenom</th>
-                                <th scope="col">montant</th>
-                                <th scope="col">status</th>
-                                <th scope="col">Actions</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr v-for="order in orders" :key="order.num_cmd">
-                                <th scope="row">{{order.num_cmd}}</th>
-                                <th scope="row">{{moment(order.date_cmd).format('YYYY-MM-DD')}}</th>
-                                <td>{{order.id_client.nom_client}}</td>
-                                <td>{{order.id_client.prenom_client}}</td>
-                                <td>{{order.montant_cmd}}</td>
-                                <td><span class="badge badge-primary">en cours</span></td>
-                                <td>
-                                    <button type="button" class="btn btn-primary"
-                                            @click="$modal.show('order-modal',{order,client : order.id_client}) ">
-                                        Consulter la commande
-                                    </button>
-                                </td>
-                            </tr>
-                            <OrderModal></OrderModal>
-                            </tbody>
-                        </table>
+                    <div class="card-body">
+                        <div class="col-12">
+                            <div class="row filter mt-3 mb-2 text-center">
+                                <input class="search form-control form-control-lg" type="text" placeholder="Chercher par client">
+                            </div>
+                            <b-row class="mb-1 pull-right">
+                                <label class="text-muted">{{ total }} commandes passées</label>
+                            </b-row>
+                            <table class="table ">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Commande</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Nom</th>
+                                    <th scope="col">Prénom</th>
+                                    <th scope="col">État d'avancement</th>
+                                    <th scope="col">Total</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="order in orders" :key="order.num_cmd">
+                                    <th scope="row"><a href="#" style="color: #1f5eff" @click="$modal.show('order-modal',{order,client : order.id_client}) ">#{{order.num_cmd}}</a></th>
+                                    <th scope="row">{{moment(order.date_cmd).lang("fr").format('LLL')}}</th>
+                                    <td>{{order.id_client.nom_client}}</td>
+                                    <td>{{order.id_client.prenom_client}}</td>
+                                    <td><span class="badge badge-primary">en cours</span></td>
+                                    <td>{{order.montant_cmd}} €</td>
+                                </tr>
+                                <OrderModal></OrderModal>
+                                </tbody>
+                            </table>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -135,11 +122,14 @@
 </script>
 
 <style scoped>
-    .container {
-        padding: 2rem 0rem;
-    }
+    .card {
 
-    td, th {
+    }
+    /*.container {
+        padding: 2rem 0rem;
+    }*/
+
+   /* td, th {
         vertical-align: middle;
         font-size: medium;
         text-align: center;
@@ -152,5 +142,5 @@
 
     .filter {
         margin-bottom: 30px;
-    }
+    }*/
 </style>

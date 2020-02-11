@@ -22,6 +22,12 @@
                             <p>Dashboard</p>
                         </router-link>
                     </li>
+                    <li :class="currentPage.includes('orders') ? 'nav-item active' : 'nav-item'" v-if="isLoggedIn">
+                        <router-link class="nav-link" to="/orders">
+                            <i class="now-ui-icons shopping_tag-content"></i>
+                            <p>Commandes</p>
+                        </router-link>
+                    </li>
 
                     <!--                    <li :class="currentPage.includes('cart') ? 'nav-item active' : 'nav-item'" v-if="isLoggedIn">-->
 
