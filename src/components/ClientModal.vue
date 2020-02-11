@@ -1,6 +1,6 @@
 <template>
     <modal name="client-modal" :adaptive="true" height="auto" :scrollable="true"
-           @before-open="beforeOpen">
+           @before-open="beforeOpen" @cancel="close">
         <div class="modal-content">
             <!--Header-->
             <div class="modal-header">
@@ -109,7 +109,30 @@
                 this.method = event.params.method;
                 if(this.method === 'edit')
                     this.client = event.params.client;
+                if(this.method === 'get')
+                    this.client = event.params.client;
+                if(this.method === 'create')
+                    this.client = {
+                        "nom_client": '',
+                        "prenom_client":'',
+                        "adresse_client" :'',
+                        "zip_code_client": '',
+                        "country_client": '',
+                        "telephone_client" :'',
+                        "email_client":''
+                    };
                 },
+            close(){
+                this.client = {
+                    "nom_client": '',
+                    "prenom_client":'',
+                    "adresse_client" :'',
+                    "zip_code_client": '',
+                    "country_client": '',
+                    "telephone_client" :'',
+                    "email_client":''
+                };
+            },
             async update () {
                 this.loading = true;
                 let obj = {
@@ -131,15 +154,7 @@
                     this.loading = false;
                 });
 
-                this.client = {
-                    "nom_client": '',
-                    "prenom_client":'',
-                    "adresse_client" :'',
-                    "zip_code_client": '',
-                    "country_client": '',
-                    "telephone_client" :'',
-                    "email_client":''
-                };
+
 
             },
             async create () {
