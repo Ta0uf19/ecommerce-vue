@@ -71,6 +71,7 @@
         data() {
             return {
                 clients: {},
+                client: '',
                 loading: true,
                 marqueFilter: {name: "CHANEL", path: "641.png"},
 

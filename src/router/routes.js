@@ -9,6 +9,7 @@ import { store } from '../store/store'
 //import Cart from "../components/Cart";
 import ProductCart from "../components/ProductCart";
 import Clients from "../components/Clients";
+import Product from "../components/Product";
 
 const routes = [
     { path: '/', redirect: '/dashboard' },
@@ -51,6 +52,14 @@ const routes = [
         component: Clients,
         meta: {
             title: 'Clients | PriceQuery',
+        }
+    },
+    {
+        path: '/admin/product',
+        name: 'adminProduct',
+        component: Product,
+        meta: {
+            title: 'Product | PriceQuery',
         }
     }
 
