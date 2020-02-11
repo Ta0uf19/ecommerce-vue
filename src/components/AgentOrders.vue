@@ -1,60 +1,71 @@
 <template>
-    <div class="container-fluid" style="width: 80%" @before-open="beforeOpen" >
+    <div class="container-fluid" style="width: 80%" @before-open="beforeOpen">
         <b-col>
             <div class="row filter">
-                <input class="search form-control form-control-lg col-9" type="text" placeholder="Chercher par client" >
+                <input class="search form-control form-control-lg col-9" type="text" placeholder="Chercher par client">
                 <div class="form-check offset-1">
                     <label class="form-check-label">
-                        <input class="form-check-input" type="checkbox" >
+                        <input class="form-check-input" type="checkbox">
                         Tous les mois
                         <span class="form-check-sign"><span class="check"></span>
                 </span>
                     </label>
                 </div>
             </div>
-        <b-row class="mb-2">
-            <div class="ml-4">
-                <label class="text-muted">{{ total }} commandes passées</label>
+            <b-row class="mb-2">
+                <div class="ml-4">
+                    <label class="text-muted">{{ total }} commandes passées</label>
+                </div>
+            </b-row>
+            <div v-if="loading">
+                <div class="text-center">
+                    <b-spinner label="Loading..."></b-spinner>
+                </div>
             </div>
-        </b-row>
-        <div class="row card">
-            <div class="col-12">
-                <table class="table table-borderless">
-                    <thead>
-                    <tr>
-                        <th scope="col">N°</th>
-                        <th scope="col">date</th>
-                        <th scope="col">nom</th>
-                        <th scope="col">prenom</th>
-                        <th scope="col">montant</th>
-                        <th scope="col">status</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="order in orders" :key="order.num_cmd">
-                        <th scope="row">{{order.num_cmd}}</th>
-                        <th scope="row">{{moment(order.date_cmd).format('YYYY-MM-DD')}}</th>
-                        <td>{{order.id_client.nom_client}}</td>
-                        <td>{{order.id_client.prenom_client}}</td>
-                        <td>{{order.montant_cmd}}</td>
-                        <td><span class="badge badge-primary">en cours</span></td>
-                        <td>
-                            <button type="button" class="btn btn-primary"  @click="$modal.show('order-modal',{order,client : order.id_client}) ">Consulter la commande</button>
-                        </td>
-                    </tr>
-                    <OrderModal></OrderModal>
-                    </tbody>
-                </table>
+            <div v-else>
+                <div class="row card">
+                    <div class="col-12">
+                        <table class="table table-borderless">
+                            <thead>
+                            <tr>
+                                <th scope="col">N°</th>
+                                <th scope="col">date</th>
+                                <th scope="col">nom</th>
+                                <th scope="col">prenom</th>
+                                <th scope="col">montant</th>
+                                <th scope="col">status</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="order in orders" :key="order.num_cmd">
+                                <th scope="row">{{order.num_cmd}}</th>
+                                <th scope="row">{{moment(order.date_cmd).format('YYYY-MM-DD')}}</th>
+                                <td>{{order.id_client.nom_client}}</td>
+                                <td>{{order.id_client.prenom_client}}</td>
+                                <td>{{order.montant_cmd}}</td>
+                                <td><span class="badge badge-primary">en cours</span></td>
+                                <td>
+                                    <button type="button" class="btn btn-primary"
+                                            @click="$modal.show('order-modal',{order,client : order.id_client}) ">
+                                        Consulter la commande
+                                    </button>
+                                </td>
+                            </tr>
+                            <OrderModal></OrderModal>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-        </div>
         </b-col>
     </div>
 </template>
 <script>
 
     import OrderModal from "./OrderModal";
-    import { mapGetters } from 'vuex';
+    import {mapGetters} from 'vuex';
+
     export default {
 
 
@@ -70,16 +81,16 @@
                 total: {},
             }
         },
-        created : function() {
+        created: function () {
             this.beforeOpen();
         },
         methods: {
             ...mapGetters(['getUser']),
-            show:function () {
+            show: function () {
                 this.$modal.show('hello-world');
                 console.log('test');
             },
-            hide () {
+            hide() {
                 this.$modal.hide('hello-world');
             },
             beforeOpen() {
@@ -90,7 +101,7 @@
                 ]).then(() => {
                 });
             },
-            test(){
+            test() {
                 console.log('test called');
             },
             async fetchOrders() {
@@ -98,12 +109,16 @@
                 let returnPromise;
 
                 console.log(this.getUser().username);
-                console.log('email :'+this.$store.state.auth.user.username);
-                console.log('user :'+this.$store.state.auth.user);
-                console.log('auth :'+this.$store.state.auth);
-                console.log('state :'+this.$store.state);
+                console.log('email :' + this.$store.state.auth.user.username);
+                console.log('user :' + this.$store.state.auth.user);
+                console.log('auth :' + this.$store.state.auth);
+                console.log('state :' + this.$store.state);
 
-                await this.axios.get('/agent/41/orders').then(({data}) => {
+                await this.axios.get('/orders/agent', {
+                    params: {
+                        "email": this.$store.state.auth.user.username
+                    }
+                }).then(({data}) => {
                     this.total = data.total;
                     this.orders = data.order;
                     console.log(data);
@@ -123,16 +138,19 @@
     .container {
         padding: 2rem 0rem;
     }
+
     td, th {
         vertical-align: middle;
         font-size: medium;
         text-align: center;
     }
+
     th {
         margin: 2rem 0rem 1rem;
         font-size: large;
     }
-    .filter{
+
+    .filter {
         margin-bottom: 30px;
     }
 </style>

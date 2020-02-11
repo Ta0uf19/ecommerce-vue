@@ -8,6 +8,7 @@ import Login from "../components/Login";
 import { store } from '../store/store'
 //import Cart from "../components/Cart";
 import ProductCart from "../components/ProductCart";
+import Clients from "../components/Clients";
 
 const routes = [
     { path: '/', redirect: '/dashboard' },
@@ -42,6 +43,14 @@ const routes = [
         component: AgentOrders,
         meta: {
             title: 'orders | PriceQuery',
+        }
+    },
+    {
+        path: '/admin/client',
+        name: 'adminClient',
+        component: Clients,
+        meta: {
+            title: 'Clients | PriceQuery',
         }
     }
 

@@ -11,4 +11,5 @@
 
 @import '~vuejs-noty/dist/vuejs-noty.css';
 @import "~vue-multiselect/dist/vue-multiselect.min.css";
-
+$fa-font-path: "~font-awesome/fonts";
+@import "~font-awesome/scss/font-awesome";
