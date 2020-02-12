@@ -3,8 +3,8 @@
 ## Preview
 
 ![1](https://s5.gifyu.com/images/109ce2f110789c36c.gif)
-![Cart](https://s5.gifyu.com/images/265a9c84e09d2fb01.gif)
-![2](https://s5.gifyu.com/images/3806b150fcf3dff6b.gif)
+![2](https://s5.gifyu.com/images/ezgif.com-optimizebbc89df68568bd71.gif)
+![3](https://s5.gifyu.com/images/3806b150fcf3dff6b.gif)
 
 
 ## Project setup
