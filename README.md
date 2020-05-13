@@ -2,9 +2,9 @@
 
 ## Preview
 
-![1](https://s5.gifyu.com/images/109ce2f110789c36c.gif)
-![2](https://s5.gifyu.com/images/ezgif.com-optimizebbc89df68568bd71.gif)
-![3](https://s5.gifyu.com/images/3806b150fcf3dff6b.gif)
+![1](https://user-images.githubusercontent.com/8300091/81851804-57272580-955a-11ea-8b4a-e93bae175e42.gif)
+![2](https://user-images.githubusercontent.com/8300091/81851795-54c4cb80-955a-11ea-9450-d86e45ac8d75.gif)
+![3](https://user-images.githubusercontent.com/8300091/81851808-57bfbc00-955a-11ea-9ece-1522242d70ed.gif)
 
 
 ## Project setup
