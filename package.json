@@ -18,7 +18,7 @@
     "core-js": "^3.4.4",
     "font-awesome": "^4.7.0",
     "lingallery": "github:ta0uf19/lingallery",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "moment-timezone": "^0.5.27",
     "npm-watch": "^0.6.0",
     "rm": "^0.1.8",
